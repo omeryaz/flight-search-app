@@ -14,9 +14,9 @@ import {
   setIsLoading,
   setDepartureData,
   setReturnData,
-} from "../../../redux/features/search-slice";
+} from "../../../redux/searchSlice";
 
-export default function FlightSearchForm() {
+export default function SearchForm() {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -29,31 +29,31 @@ export default function FlightSearchForm() {
     formState: { errors, touchedFields },
   } = useForm<SearchFormData>({
     defaultValues: {
-      departureLocation: "",
-      arrivalLocation: "",
+      departureLocation: "IST",
+      arrivalLocation: "NUE",
       departureDate: startDate,
       returnDate: endDate,
     },
   });
 
-  // ! CARRY THIS OVER TO ENV VARIABLES
-  const API_KEY = "997b00e7b6d083570e703813daaadbbd";
-
-  const apiUrl = `http://api.aviationstack.com/v1/flights?access_key=997b00e7b6d083570e703813daaadbbd`;
+  const apiUrl = `http://api.aviationstack.com/v1/flights?access_key=${process.env.NEXT_PUBLIC_API_KEY}`;
 
   const onSubmit = async (formData: SearchFormData) => {
+    // Format departure date
     formData.departureDate = moment(formData.departureDate).format(
       "YYYY-MM-DD"
     );
-    formData.returnDate = moment(formData.returnDate).format("YYY-/MM-DD");
+
+    // Format return date
+    formData.returnDate = moment(formData.returnDate).format("YYYY-MM-DD");
 
     const { departureLocation, arrivalLocation, departureDate, returnDate } =
       formData;
 
     dispatch(setIsLoading(true));
+
     try {
       // DEPARTURE REQUEST
-
       const departureDataResponse = await axios.get(apiUrl, {
         params: {
           // flight_date: departureDate,
@@ -77,6 +77,7 @@ export default function FlightSearchForm() {
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
       dispatch(setIsLoading(false));
     }
   };

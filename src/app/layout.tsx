@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { store } from "../redux/store";
 
 import "./globals.css";
-import FlightSearchForm from "./components/SearchForm/SearchForm";
+import SearchForm from "./components/SearchForm/SearchForm";
 import { ReduxProvider } from "@/redux/provider";
 
 export const metadata: Metadata = {
@@ -18,7 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ReduxProvider>
-          <FlightSearchForm />
+          <SearchForm />
           {children}
         </ReduxProvider>
       </body>

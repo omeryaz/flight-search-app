@@ -2,7 +2,7 @@ import React from "react";
 import { TableHeadingCell } from "./TableHeadings.style";
 import { TableRowWrapper } from "../Table.style";
 
-export default function FlightTableHeadings() {
+export default function TableHeadings() {
   return (
     <TableRowWrapper>
       <TableHeadingCell>from</TableHeadingCell>

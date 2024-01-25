@@ -2,12 +2,12 @@
 import React, { Key } from "react";
 import { TableWrapper } from "./Table.style";
 import TableHeadings from "./TableHeadings/TableHeadings";
-import TableItem from "./TableCells/TableItem";
+import TableItem from "./TableItem/TableItem";
 import { useSelector } from "react-redux";
 import {
   selectDepartureData,
   selectReturnData,
-} from "../../../redux/features/search-slice";
+} from "../../../redux/searchSlice";
 
 type TableTypes = {
   type: string;
@@ -26,7 +26,7 @@ export default function Table({ type }: TableTypes) {
           key={index}
           from={flight.airline.name}
           arrival={flight.arrival.airport}
-          time={flight.fliht_date}
+          time={flight.flight_date}
         />
       ))}
     </TableWrapper>
